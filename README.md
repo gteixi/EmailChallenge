@@ -27,3 +27,13 @@ Run the dev server:
 ```shellscript
 npm run dev
 ```
+
+```shellscript
+npx prisma studio
+```
+
+## Screenshots
+
+![Preview](public/assets/preview.png)
+
+![Prisma DB](public/assets/prismaDatabase.png)
