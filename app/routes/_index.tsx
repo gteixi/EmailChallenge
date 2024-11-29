@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { MessageDetails } from '~/components/MessageDetails/MessageDetails';
 
+import mockMessages from '~/mocks/mockMessages';
 import './../styles/styles.css';
 
 export const loader: LoaderFunction = async () => {
@@ -42,11 +43,14 @@ export default function Inbox() {
     setSelectedCard(card);
   };
 
+  const messagesContent =
+    messages && messages.length > 0 ? messages : mockMessages;
+
   return (
     <div className="mainContainer">
       <>
         <div className="cardsContainer">
-          {messages.map((message) => (
+          {messagesContent.map((message) => (
             <Card
               key={message.id}
               message={message}
