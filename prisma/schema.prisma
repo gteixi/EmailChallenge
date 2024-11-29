@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  subject   String
+  body      String
+  tags      String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
