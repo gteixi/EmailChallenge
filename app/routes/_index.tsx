@@ -1,49 +1,61 @@
-import { LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { prisma } from "~/db.server";
+import { LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 
+import { prisma } from '~/db.server';
+import { Message } from '@prisma/client';
+
+import { useState } from 'react';
+
+import { Card } from '~/components/Card/Card';
+import { MessageDetails } from '~/components/MessageDetails/MessageDetails';
+
+import './../styles/styles.css';
 
 export const loader: LoaderFunction = async () => {
   try {
     const messages = await prisma.message.findMany();
     return new Response(JSON.stringify(messages), {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error) {
-    console.error("Error fetching messages:", error);
+    console.error('Error fetching messages:', error);
 
     return new Response(
-      JSON.stringify({ error: "Failed to fetch messages. Please try again later." }),
+      JSON.stringify({
+        error: 'Failed to fetch messages. Please try again later.',
+      }),
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
         status: 500,
-      }
+      },
     );
   }
 };
 
-
-interface Message {
-  id: string;
-  subject: string;
-  body: string;
-}
-
 export default function Inbox() {
   const messages = useLoaderData<Message[]>();
 
+  const [selectedCard, setSelectedCard] = useState(messages[0]);
+
+  const handleCardClick = (card: (typeof messages)[0]) => {
+    setSelectedCard(card);
+  };
+
   return (
-    <div>
-      <h1>Inbox</h1>
-      <ul>
-        {messages.map((message: { id: string; subject: string; body: string }) => (
-          <li key={message.id}>
-            <h2>{message.subject}</h2>
-            <p>{message.body}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="mainContainer">
+      <>
+        <div className="cardsContainer">
+          {messages.map((message) => (
+            <Card
+              key={message.id}
+              message={message}
+              onClick={() => handleCardClick(message)}
+            />
+          ))}
+        </div>
+        <MessageDetails message={selectedCard} />
+      </>
     </div>
   );
 }
