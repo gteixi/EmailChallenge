@@ -8,17 +8,15 @@ type CardProps = {
 
 export const Card = ({ message, onClick }: CardProps) => {
   return (
-    <div className="cardsContainer">
-      <button key={message.id} onClick={onClick} className="card">
-        <div>
-          {message.from} -{' '}
-          {formatDistanceToNow(message.createdAt, { addSuffix: true })}
-        </div>
-        <h3 className="text-xl font-bold mb-2">{message.subject}</h3>
-        <p className="test">{message.body.substring(0, 30)}</p>
-        <div className="tags">{message.tags}</div>
-        <div></div>
-      </button>
-    </div>
+    <button key={message.id} onClick={onClick} className="card">
+      <div>
+        {message.from} -{' '}
+        {formatDistanceToNow(message.createdAt, { addSuffix: true })}
+      </div>
+      <h3 className="text-xl font-bold mb-2">{message.subject}</h3>
+      <p className="test">{message.body.substring(0, 30)}</p>
+      <div className="tags">{message.tags}</div>
+      <div></div>
+    </button>
   );
 };
