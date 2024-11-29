@@ -9,6 +9,7 @@ datasource db {
 
 model Message {
   id        String   @id @default(uuid())
+  from      String
   subject   String
   body      String
   tags      String
