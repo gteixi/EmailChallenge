@@ -7,14 +7,17 @@ type CardProps = {
 };
 
 export const Card = ({ message, onClick }: CardProps) => {
+  const formatDate = (date: Date) => {
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+
   return (
     <button key={message.id} onClick={onClick} className="card">
       <div>
-        {message.from} -{' '}
-        {formatDistanceToNow(message.createdAt, { addSuffix: true })}
+        {message.from} - {formatDate(message.createdAt)}
       </div>
       <h3 className="text-xl font-bold mb-2">{message.subject}</h3>
-      <p className="test">{message.body.substring(0, 30)}</p>
+      <p className="test">{message.body.substring(0, 37)}</p>
       <div className="tags">{message.tags}</div>
       <div></div>
     </button>
